@@ -1,0 +1,30 @@
+@echo off
+
+REM Obtener la dirección IP de la máquina
+for /f "tokens=2 delims=:" %%a in ('ipconfig ^| findstr /c:"IPv4 Address"') do set ip=%%a
+
+REM Limpiar la dirección IP
+set ip=%ip:~1%
+
+REM Verificar el rango de la dirección IP
+if %ip:~0,3%==192 (
+    REM Instalar archivo .exe para el rango 192.X.X.X
+    echo Instalando archivo1.exe para el rango 192.X.X.X
+    REM Agrega aquí el comando para instalar el archivo1.exe
+) else if %ip:~0,3%==10 (
+    REM Instalar archivo .exe para el rango 10.X.X.X
+    echo Instalando archivo2.exe para el rango 10.X.X.X
+    REM Agrega aquí el comando para instalar el archivo2.exe
+) else if %ip:~0,7%==172.16. (
+    REM Instalar archivo .exe para el rango 172.16.X.X
+    echo Instalando archivo3.exe para el rango 172.16.X.X
+    REM Agrega aquí el comando para instalar el archivo3.exe
+) else if %ip:~0,7%==172.17. (
+    REM Instalar archivo .exe para el rango 172.17.X.X
+    echo Instalando archivo4.exe para el rango 172.17.X.X
+    REM Agrega aquí el comando para instalar el archivo4.exe
+) else (
+    REM Instalar archivo .exe para otros rangos
+    echo Instalando archivo5.exe para otros rangos
+    REM Agrega aquí el comando para instalar el archivo5.exe
+)
