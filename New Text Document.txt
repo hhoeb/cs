@@ -1,0 +1,18 @@
+@echo off
+set SensorLocal=C:\WindowsSensor.exe
+set ServiceName=CSFalconService
+set CID=2887A501A4A8481AA7C552ED649D9B38-7E  REM Replace <your_CID_value> with the new tenant CID value
+
+REM Check if the package exists
+if not exist "%SensorLocal%" (
+    REM Package doesn't exist, download it
+    REM GitHub Raw URL example: https://github.com/hhoeb/cs/blob/main/WindowsSensor.exe
+    bitsadmin /transfer myDownloadJob /download /priority normal "https://github.com/hhoeb/cs/blob/main/WindowsSensor.exe" "%SensorLocal%"
+)
+
+REM Check if the service is running
+sc query "%ServiceName%" | find "RUNNING" > nul
+if errorlevel 1 (
+    REM Service is not running, install the package
+    "%SensorLocal%" /install /quiet /norestart CID=%CID% /log "C:\logs"
+)
